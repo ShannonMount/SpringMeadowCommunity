@@ -1,0 +1,128 @@
+# generated: 2026-05-04
+# last_updated: 2026-05-04
+# project: SpringMeadowCommunity
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog -> in-progress: Automatically when first story is created (via create-story)
+#   - in-progress -> done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - Developer typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-05-04
+last_updated: 2026-05-04
+project: SpringMeadowCommunity
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  epic-1: in-progress
+  1-1-public-website-shell-and-navigation: review
+  1-2-public-home-and-community-information-pages: backlog
+  1-3-public-announcements-listing: backlog
+  1-4-public-events-listing: backlog
+  1-5-public-contact-form-with-bot-protection: backlog
+  1-6-public-dues-payment-entry-point: backlog
+  1-7-public-vendor-proposal-placeholder: backlog
+  epic-1-retrospective: optional
+  epic-2: backlog
+  2-1-resident-authentication-entry-and-session-handling: backlog
+  2-2-application-profile-resolution: backlog
+  2-3-property-membership-model: backlog
+  2-4-property-invitation-acceptance: backlog
+  2-5-role-and-permission-assignment-foundation: backlog
+  2-6-resident-portal-layout-and-navigation: backlog
+  2-7-resident-dashboard-summary: backlog
+  2-8-resident-property-detail-view: backlog
+  epic-2-retrospective: optional
+  epic-3: backlog
+  3-1-assessment-cycle-and-property-assessment-management: backlog
+  3-2-resident-dues-status-and-payment-history: backlog
+  3-3-resident-stripe-payment-session: backlog
+  3-4-guest-property-lookup-for-payment: backlog
+  3-5-guest-stripe-payment-session: backlog
+  3-6-stripe-webhook-processing-and-payment-allocation: backlog
+  3-7-payment-receipt-emails: backlog
+  3-8-admin-payment-records-and-manual-payments: backlog
+  3-9-delinquency-reporting-foundation: backlog
+  epic-3-retrospective: optional
+  epic-4: backlog
+  4-1-document-metadata-and-visibility-model: backlog
+  4-2-secure-document-upload-and-storage-routing: backlog
+  4-3-authorized-document-listing-and-filtering: backlog
+  4-4-signed-private-document-download: backlog
+  4-5-announcement-management-and-resident-public-display: backlog
+  4-6-event-management-and-calendar-display: backlog
+  4-7-resident-message-thread-creation: backlog
+  4-8-board-admin-message-inbox-and-replies: backlog
+  4-9-message-visibility-history-and-notifications: backlog
+  epic-4-retrospective: optional
+  epic-5: backlog
+  5-1-board-admin-workspace-shell-and-navigation: backlog
+  5-2-admin-dashboard-summary: backlog
+  5-3-property-management: backlog
+  5-4-user-and-membership-management: backlog
+  5-5-role-assignment-and-permission-management: backlog
+  5-6-community-settings-management: backlog
+  5-7-admin-data-tables-and-operational-filters: backlog
+  5-8-audit-log-viewer: backlog
+  5-9-admin-monitoring-for-webhooks-emails-and-jobs: backlog
+  epic-5-retrospective: optional
+  epic-6: backlog
+  6-1-compliance-calendar-event-and-task-foundation: backlog
+  6-2-compliance-calendar-views-and-status-tracking: backlog
+  6-3-compliance-reminder-job-and-warning-emails: backlog
+  6-4-annual-association-meeting-workflow: backlog
+  6-5-meeting-records-minutes-and-board-meeting-tracking: backlog
+  6-6-records-request-workflow: backlog
+  6-7-records-request-reminder-and-overdue-escalation: backlog
+  6-8-annual-financial-statement-workflow: backlog
+  6-9-audit-review-and-compilation-workflow: backlog
+  epic-6-retrospective: optional
+  epic-7: backlog
+  7-1-delinquency-case-foundation: backlog
+  7-2-lien-readiness-timing-rules: backlog
+  7-3-address-verification-before-pre-lien-notice: backlog
+  7-4-pre-lien-statement-mailing-tracking: backlog
+  7-5-legal-review-gate-for-lien-related-workflow: backlog
+  7-6-external-lien-filing-and-enforcement-reminder-tracking: backlog
+  7-7-fine-and-suspension-workflow-guardrail-placeholder: backlog
+  7-8-sensitive-workflow-audit-trail: backlog
+  7-9-future-financial-approval-and-reconciliation-hooks: backlog
+  epic-7-retrospective: optional
+  epic-8: backlog
+  8-1-feature-flag-foundation-for-later-modules: backlog
+  8-2-community-posts-moderation-placeholder: backlog
+  8-3-maintenance-request-expansion-placeholder: backlog
+  8-4-architectural-request-expansion-placeholder: backlog
+  8-5-vendor-proposal-and-approved-vendor-expansion-placeholder: backlog
+  8-6-vendor-invoice-and-approval-expansion-placeholder: backlog
+  8-7-pool-maintenance-expansion-placeholder: backlog
+  8-8-multi-hoa-and-saas-readiness-guardrails: backlog
+  epic-8-retrospective: optional
