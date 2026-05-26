@@ -1,6 +1,6 @@
 # Story 1.1: Public Website Shell and Navigation
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -41,6 +41,10 @@ so that I can find official community information and entry points without loggi
   - [x] Run lint/type checks if tooling exists or is added in this story.
   - [x] Manually verify desktop and mobile navigation.
   - [x] Verify keyboard tab order and visible focus state.
+
+### Review Findings
+
+- [x] [Review][Patch] Login route drops the public navigation shell [app/(auth)/login/page.tsx:4]
 
 ## Dev Notes
 
@@ -161,12 +165,13 @@ GPT-5 Codex
 - Added public route group, root layout, public layout, placeholder public routes, login placeholder route, reusable navigation, and static public navigation config.
 - Added keyboard-accessible responsive navigation with visible focus states and Escape handling for the mobile menu.
 - Added a Node test covering required files, nav labels, mobile accessibility attributes, and private-service import guardrails.
+- Fixed code review finding by keeping the Login route inside the public route group so it retains public navigation.
 - Verification passed: `npm test`, `npm run typecheck`, `npm run lint`, and escalated `npm run build`.
 - Residual risk: `npm audit --omit=dev` reports moderate PostCSS advisory through Next.js 16.2.4; available forced fix would install a breaking Next downgrade, so it was not applied.
 
 ### File List
 
-- `app/(auth)/login/page.tsx`
+- `app/(public)/login/page.tsx`
 - `app/(public)/about/page.tsx`
 - `app/(public)/announcements/page.tsx`
 - `app/(public)/contact/page.tsx`

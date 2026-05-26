@@ -1,5 +1,5 @@
 # generated: 2026-05-04
-# last_updated: 2026-05-04
+# last_updated: 2026-05-18
 # project: SpringMeadowCommunity
 # project_key: NOKEY
 # tracking_system: file-system
@@ -35,7 +35,7 @@
 # - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
 
 generated: 2026-05-04
-last_updated: 2026-05-04
+last_updated: 2026-05-18
 project: SpringMeadowCommunity
 project_key: NOKEY
 tracking_system: file-system
@@ -43,53 +43,53 @@ story_location: _bmad-output/implementation-artifacts
 
 development_status:
   epic-1: in-progress
-  1-1-public-website-shell-and-navigation: review
-  1-2-public-home-and-community-information-pages: backlog
-  1-3-public-announcements-listing: backlog
-  1-4-public-events-listing: backlog
-  1-5-public-contact-form-with-bot-protection: backlog
-  1-6-public-dues-payment-entry-point: backlog
-  1-7-public-vendor-proposal-placeholder: backlog
+  1-1-public-website-shell-and-navigation: done
+  1-2-public-home-and-community-information-pages: done
+  1-3-public-announcements-listing: done
+  1-4-public-events-listing: done
+  1-5-public-contact-form-with-bot-protection: done
+  1-6-public-dues-payment-entry-point: done
+  1-7-public-vendor-proposal-placeholder: done
   epic-1-retrospective: optional
-  epic-2: backlog
-  2-1-resident-authentication-entry-and-session-handling: backlog
-  2-2-application-profile-resolution: backlog
-  2-3-property-membership-model: backlog
-  2-4-property-invitation-acceptance: backlog
-  2-5-role-and-permission-assignment-foundation: backlog
-  2-6-resident-portal-layout-and-navigation: backlog
-  2-7-resident-dashboard-summary: backlog
-  2-8-resident-property-detail-view: backlog
+  epic-2: in-progress
+  2-1-resident-authentication-entry-and-session-handling: done
+  2-2-application-profile-resolution: done
+  2-3-property-membership-model: done
+  2-4-property-invitation-acceptance: done
+  2-5-role-and-permission-assignment-foundation: done
+  2-6-resident-portal-layout-and-navigation: done
+  2-7-resident-dashboard-summary: done
+  2-8-resident-property-detail-view: done
   epic-2-retrospective: optional
-  epic-3: backlog
-  3-1-assessment-cycle-and-property-assessment-management: backlog
-  3-2-resident-dues-status-and-payment-history: backlog
-  3-3-resident-stripe-payment-session: backlog
-  3-4-guest-property-lookup-for-payment: backlog
-  3-5-guest-stripe-payment-session: backlog
-  3-6-stripe-webhook-processing-and-payment-allocation: backlog
-  3-7-payment-receipt-emails: backlog
-  3-8-admin-payment-records-and-manual-payments: backlog
-  3-9-delinquency-reporting-foundation: backlog
+  epic-3: in-progress
+  3-1-assessment-cycle-and-property-assessment-management: done
+  3-2-resident-dues-status-and-payment-history: done
+  3-3-resident-stripe-payment-session: done
+  3-4-guest-property-lookup-for-payment: done
+  3-5-guest-stripe-payment-session: done
+  3-6-stripe-webhook-processing-and-payment-allocation: done
+  3-7-payment-receipt-emails: done
+  3-8-admin-payment-records-and-manual-payments: done
+  3-9-delinquency-reporting-foundation: done
   epic-3-retrospective: optional
-  epic-4: backlog
-  4-1-document-metadata-and-visibility-model: backlog
-  4-2-secure-document-upload-and-storage-routing: backlog
-  4-3-authorized-document-listing-and-filtering: backlog
-  4-4-signed-private-document-download: backlog
-  4-5-announcement-management-and-resident-public-display: backlog
-  4-6-event-management-and-calendar-display: backlog
-  4-7-resident-message-thread-creation: backlog
-  4-8-board-admin-message-inbox-and-replies: backlog
-  4-9-message-visibility-history-and-notifications: backlog
+  epic-4: in-progress
+  4-1-document-metadata-and-visibility-model: done
+  4-2-secure-document-upload-and-storage-routing: done
+  4-3-authorized-document-listing-and-filtering: done
+  4-4-signed-private-document-download: done
+  4-5-announcement-management-and-resident-public-display: done
+  4-6-event-management-and-calendar-display: done
+  4-7-resident-message-thread-creation: done
+  4-8-board-admin-message-inbox-and-replies: done
+  4-9-message-visibility-history-and-notifications: done
   epic-4-retrospective: optional
-  epic-5: backlog
-  5-1-board-admin-workspace-shell-and-navigation: backlog
-  5-2-admin-dashboard-summary: backlog
-  5-3-property-management: backlog
-  5-4-user-and-membership-management: backlog
-  5-5-role-assignment-and-permission-management: backlog
-  5-6-community-settings-management: backlog
+  epic-5: in-progress
+  5-1-board-admin-workspace-shell-and-navigation: done
+  5-2-admin-dashboard-summary: done
+  5-3-property-management: done
+  5-4-user-and-membership-management: done
+  5-5-role-assignment-and-permission-management: done
+  5-6-community-settings-management: ready-for-dev
   5-7-admin-data-tables-and-operational-filters: backlog
   5-8-audit-log-viewer: backlog
   5-9-admin-monitoring-for-webhooks-emails-and-jobs: backlog

@@ -1,6 +1,6 @@
 # Story 1.1: Public Website Shell and Navigation
 
-Status: review
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
