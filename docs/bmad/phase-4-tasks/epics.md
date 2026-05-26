@@ -913,7 +913,7 @@ So that I can safely pay dues on behalf of a property.
 **Given** guest payments are enabled
 **When** a guest submits address, postal code, account number, or public payment code with a valid Turnstile token
 **Then** the server performs a privacy-safe lookup
-**And** returns only whether the payment flow may proceed, not owner name, balance, resident contacts, documents, or payment history.
+**And** returns only whether the payment flow may proceed, not owner name, balance, resident contacts, documents, payment history, lookup tokens, or other continuation secrets.
 
 **Given** the lookup does not match an eligible property
 **When** the guest submits the lookup form
@@ -933,9 +933,9 @@ So that I can pay dues and receive only my transaction receipt.
 
 **Acceptance Criteria:**
 
-**Given** a guest lookup has established a privacy-safe eligible payment context
+**Given** a guest lookup has returned generic success without persisting continuation state
 **When** the guest submits payer name, email, optional phone, amount, payment preference, and valid Turnstile token
-**Then** the server creates a pending guest payment record and Stripe session
+**Then** the server revalidates the eligible payment context, creates any required short-lived token/session persistence owned by Story 3.5, and creates a pending guest payment record and Stripe session
 **And** the response contains checkout navigation data and no private property details.
 
 **Given** the guest payment succeeds later through Stripe
