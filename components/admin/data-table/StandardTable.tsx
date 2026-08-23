@@ -48,14 +48,39 @@ export default function StandardTable<T>({
 
   // Build a mapping from stable row id -> action when an array of rowActions
   const rowActionMap = useMemo(() => {
-    if (!Array.isArray(rowActions) || !rowKey) return null;
-    const m = new Map();
+    if (!Array.isArray(rowActions)) return null;
+
+    if (!rowKey) {
+      throw new Error("StandardTable: rowKey is required when rowActions is an array");
+    }
+
+    const m = new Map<string, React.ReactNode | null>();
+    const seen = new Set<string>();
     data.forEach((d, i) => {
       const id = typeof rowKey === "function" ? rowKey(d) : (d as any)[rowKey];
-      if (id != null) m.set(String(id), rowActions[i] ?? null);
+      const sid = id != null ? String(id) : String(i);
+      if (seen.has(sid)) {
+        // duplicate id detected
+        // eslint-disable-next-line no-console
+        console.warn("StandardTable: duplicate rowKey value detected:", sid);
+      } else {
+        seen.add(sid);
+      }
+      m.set(sid, (rowActions as React.ReactNode[])[i] ?? null);
     });
     return m;
   }, [rowActions, data, rowKey]);
+
+  // Stable id mapping for rows (object-identity -> stable id) to avoid index-based keys
+  const stableIdMap = useMemo(() => {
+    const map = new Map<any, string>();
+    data.forEach((d, i) => {
+      const id = rowKey ? (typeof rowKey === "function" ? rowKey(d) : (d as any)[rowKey]) : undefined;
+      const sid = id != null ? String(id) : `__gen_${i}`;
+      map.set(d, sid);
+    });
+    return map;
+  }, [data, rowKey]);
 
   function toggleSort(key: string) {
     if (sortKey === key) {
@@ -66,15 +91,19 @@ export default function StandardTable<T>({
     }
     setPage(0);
     // restore focus to the header cell after sorting for keyboard users
-    setTimeout(() => {
-      const el = headerRefs.current[key];
-      try {
-        el?.focus();
-      } catch (e) {
-        /* noop */
-      }
-    }, 0);
+    // focus will be restored in an effect when sortKey/sortOrder change
   }
+
+  // Restore focus to the header cell after sorting for keyboard users (stable, not race-prone)
+  React.useEffect(() => {
+    if (!sortKey) return;
+    const el = headerRefs.current[sortKey];
+    try {
+      el?.focus();
+    } catch (e) {
+      /* noop */
+    }
+  }, [sortKey, sortOrder]);
 
   return (
     <div className={`smc-standard-table ${className}`}>
@@ -189,8 +218,12 @@ export default function StandardTable<T>({
               </td>
             </tr>
           ) : (
-            paged.map((row, rowIdx) => (
-              <tr key={rowIdx} className={rowIdx % 2 === 0 ? "bg-white" : "bg-surface-muted"}>
+            paged.map((row, rowIdx) => {
+              const rowId = rowKey ? (typeof rowKey === "function" ? rowKey(row) : (row as any)[rowKey]) : undefined;
+              const trKey = rowId != null ? String(rowId) : stableIdMap.get(row) ?? String(rowIdx);
+
+              return (
+                <tr key={trKey} className={rowIdx % 2 === 0 ? "bg-white" : "bg-surface-muted"}>
                 {columns.map((c) => (
                   <td key={c.key} className="px-2 py-2 align-top text-sm">
                     {c.render ? c.render(row) : String((row as any)[c.key] ?? "")}
@@ -215,8 +248,9 @@ export default function StandardTable<T>({
                     })()}
                   </td>
                 ) : null}
-              </tr>
-            ))
+                </tr>
+              );
+            })
           )}
         </tbody>
       </table>
