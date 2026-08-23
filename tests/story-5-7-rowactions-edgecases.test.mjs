@@ -3,7 +3,10 @@ import assert from "node:assert/strict";
 import { render } from "@testing-library/react";
 import React from "react";
 
-import StandardTable from "../../components/admin/data-table/StandardTable.tsx";
+import path from "node:path";
+
+const compPath = path.join(process.cwd(), "components", "admin", "data-table", "StandardTable.tsx");
+const { default: StandardTable } = await import("file://" + compPath);
 
 describe("Story 5.7 - rowActions edge cases", () => {
   afterEach(() => {
@@ -14,7 +17,7 @@ describe("Story 5.7 - rowActions edge cases", () => {
   it("throws when rowActions is array but rowKey is missing", () => {
     const columns = [{ key: "id", title: "ID" }];
     const data = [{ id: 1 }, { id: 2 }];
-    const rowActions = [<div key="a">A</div>, <div key="b">B</div>];
+    const rowActions = [React.createElement("div", { key: "a" }, "A"), React.createElement("div", { key: "b" }, "B")];
 
     let threw = false;
     try {
@@ -29,7 +32,7 @@ describe("Story 5.7 - rowActions edge cases", () => {
   it("warns on duplicate rowKey values when building rowActionMap", () => {
     const columns = [{ key: "id", title: "ID" }];
     const data = [{ id: 1 }, { id: 1 }];
-    const rowActions = [<div key="a">A</div>, <div key="b">B</div>];
+    const rowActions = [React.createElement("div", { key: "a" }, "A"), React.createElement("div", { key: "b" }, "B")];
 
     const warnings = [];
     const origWarn = console.warn;
@@ -47,7 +50,7 @@ describe("Story 5.7 - rowActions edge cases", () => {
   it("keeps actions aligned when rows are re-hydrated as new object instances (matching ids)", () => {
     const columns = [{ key: "id", title: "ID" }];
     const data1 = [{ id: 1 }, { id: 2 }];
-    const rowActions = [<div data-test-id="act-1">A1</div>, <div data-test-id="act-2">A2</div>];
+    const rowActions = [React.createElement("div", { "data-test-id": "act-1" }, "A1"), React.createElement("div", { "data-test-id": "act-2" }, "A2")];
 
     const { rerender, container } = render(React.createElement(StandardTable, { columns, data: data1, rowActions, rowKey: "id" }));
 
