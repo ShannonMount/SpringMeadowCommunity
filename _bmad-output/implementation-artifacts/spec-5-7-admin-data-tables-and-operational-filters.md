@@ -2,7 +2,7 @@
 title: '5.7 - Admin Data Tables and Operational Filters'
 type: 'feature' # feature | bugfix | refactor | chore
 created: '2026-08-22'
-status: 'in-progress' # draft | ready-for-dev | in-progress | in-review | done
+status: 'done' # draft | ready-for-dev | in-progress | in-review | done
 baseline_commit: 'd448c4b'
 review_loop_iteration: 0 # incremented by step-04 before each review loopback
 context: [] # optional: `{project-root}/`-prefixed paths to project-wide standards/docs the implementation agent should load. Keep short — only what isn't already distilled into the spec body.
@@ -60,6 +60,8 @@ context: [] # optional: `{project-root}/`-prefixed paths to project-wide standar
 - Given a keyboard-only user navigates a table, when they move between headers and trigger sort, then focus movement and sort toggles remain predictable and accessible.
 
 ## Spec Change Log
+
+- 2026-08-23: Implementation completed and merged to `main` (commit 34766f4).
 
 ## Design Notes
 
