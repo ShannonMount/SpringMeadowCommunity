@@ -17,26 +17,29 @@ export function filterData(data, query, columns = []) {
 export function sortData(data, sortKey, order = "asc") {
   if (!sortKey) return data;
 
-  const copy = [...data];
+  // Stable sort: decorate items with their original index, sort, then undecorate.
+  const decorated = data.map((item, idx) => ({ item, idx }));
 
-  copy.sort((a, b) => {
-    const va = a[sortKey];
-    const vb = b[sortKey];
+  decorated.sort((A, B) => {
+    const a = A.item[sortKey];
+    const b = B.item[sortKey];
 
-    if (va == null && vb == null) return 0;
-    if (va == null) return order === "asc" ? -1 : 1;
-    if (vb == null) return order === "asc" ? 1 : -1;
+    if (a == null && b == null) return A.idx - B.idx;
+    if (a == null) return order === "asc" ? -1 : 1;
+    if (b == null) return order === "asc" ? 1 : -1;
 
-    if (typeof va === "number" && typeof vb === "number") {
-      return order === "asc" ? va - vb : vb - va;
+    if (typeof a === "number" && typeof b === "number") {
+      const cmp = a - b;
+      if (cmp !== 0) return order === "asc" ? cmp : -cmp;
+      return A.idx - B.idx;
     }
 
-    return order === "asc"
-      ? String(va).localeCompare(String(vb), undefined, { numeric: true })
-      : String(vb).localeCompare(String(va), undefined, { numeric: true });
+    const cmp = String(a).localeCompare(String(b), undefined, { numeric: true });
+    if (cmp !== 0) return order === "asc" ? cmp : -cmp;
+    return A.idx - B.idx;
   });
 
-  return copy;
+  return decorated.map((d) => d.item);
 }
 
 export function paginateData(data, page, pageSize) {

@@ -15,7 +15,8 @@ type Props<T = any> = {
   data?: T[];
   className?: string;
   pageSize?: number;
-  rowActions?: React.ReactNode[];
+  rowActions?: React.ReactNode[] | ((row: T) => React.ReactNode);
+  rowKey?: string | ((row: T) => string | number);
   error?: string | null;
 };
 
@@ -27,6 +28,7 @@ export default function StandardTable<T>({
   className = "",
   pageSize = 25,
   rowActions,
+  rowKey,
   error = null,
 }: Props<T>) {
   const [query, setQuery] = useState("");
@@ -43,6 +45,17 @@ export default function StandardTable<T>({
 
   const emptyContents = getEmptyState();
   const errorContents = error ? getErrorState(error) : null;
+
+  // Build a mapping from stable row id -> action when an array of rowActions
+  const rowActionMap = useMemo(() => {
+    if (!Array.isArray(rowActions) || !rowKey) return null;
+    const m = new Map();
+    data.forEach((d, i) => {
+      const id = typeof rowKey === "function" ? rowKey(d) : (d as any)[rowKey];
+      if (id != null) m.set(String(id), rowActions[i] ?? null);
+    });
+    return m;
+  }, [rowActions, data, rowKey]);
 
   function toggleSort(key: string) {
     if (sortKey === key) {
@@ -183,7 +196,25 @@ export default function StandardTable<T>({
                     {c.render ? c.render(row) : String((row as any)[c.key] ?? "")}
                   </td>
                 ))}
-                {rowActions ? <td className="px-2 py-2">{rowActions[rowIdx] ?? null}</td> : null}
+                {rowActions ? (
+                  <td className="px-2 py-2">
+                    {(() => {
+                      if (typeof rowActions === "function") {
+                        return (rowActions as (r: T) => React.ReactNode)(row);
+                      }
+
+                      // If we have a stable rowActionMap and a rowKey, use id mapping
+                      if (rowActionMap && rowKey) {
+                        const id = typeof rowKey === "function" ? rowKey(row) : (row as any)[rowKey];
+                        return id != null ? rowActionMap.get(String(id)) ?? null : null;
+                      }
+
+                      // Fallback: align by original array index using identity
+                      const originalIndex = data.indexOf(row as any);
+                      return originalIndex >= 0 ? (rowActions as React.ReactNode[])[originalIndex] ?? null : null;
+                    })()}
+                  </td>
+                ) : null}
               </tr>
             ))
           )}

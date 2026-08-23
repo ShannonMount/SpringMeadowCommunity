@@ -69,7 +69,7 @@ export default async function AdminDataTablesExamplePage() {
         </div>
       ) : null}
 
-      <StandardTable columns={columns} data={properties} pageSize={10} rowActions={rowActions} />
+      <StandardTable columns={columns} data={properties} pageSize={10} rowActions={rowActions} rowKey="id" />
     </main>
   );
 }
