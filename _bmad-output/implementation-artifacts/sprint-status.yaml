@@ -89,8 +89,8 @@ development_status:
   5-3-property-management: done
   5-4-user-and-membership-management: done
   5-5-role-assignment-and-permission-management: done
-  5-6-community-settings-management: ready-for-dev
-  5-7-admin-data-tables-and-operational-filters: backlog
+  5-6-community-settings-management: review
+  5-7-admin-data-tables-and-operational-filters: in-progress
   5-8-audit-log-viewer: backlog
   5-9-admin-monitoring-for-webhooks-emails-and-jobs: backlog
   epic-5-retrospective: optional
