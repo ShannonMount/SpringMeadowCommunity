@@ -1,11 +1,15 @@
 import "server-only";
 
-import StandardTable from "@/components/admin/data-table/StandardTable";
+// import StandardTable from "@/components/admin/data-table/StandardTable";
 import {
   listAdminProperties,
   type AdminPropertySummary,
 } from "@/server/services/admin/property-management";
 import { hasPermission } from "@/server/services/auth/permissions";
+
+import StandardTable, {
+  type Column,
+} from "@/components/admin/data-table/StandardTable";
 
 const DEFAULT_COMMUNITY_SLUG = "spring-meadow-community";
 
@@ -33,7 +37,7 @@ export default async function AdminDataTablesExamplePage() {
     { key: "state", title: "State", sortable: true },
     { key: "postalCode", title: "Postal", sortable: true },
     { key: "status", title: "Status", sortable: true },
-  ];
+  ] satisfies Column<AdminPropertySummary>[];
 
   // Build per-row action nodes based on a community-level permission.
   let rowActions: React.ReactNode[] | undefined = undefined;

@@ -15,7 +15,7 @@ describe("Story 5.7 - rowActions edge cases", () => {
   });
 
   it("throws when rowActions is array but rowKey is missing", () => {
-    const columns = [{ key: "id", title: "ID" }];
+    const columns = [{ key: "id", title: "ID", sortable: true }]satisfies Column<AdminPropertySummary>[];
     const data = [{ id: 1 }, { id: 2 }];
     const rowActions = [React.createElement("div", { key: "a" }, "A"), React.createElement("div", { key: "b" }, "B")];
 
@@ -30,7 +30,7 @@ describe("Story 5.7 - rowActions edge cases", () => {
   });
 
   it("warns on duplicate rowKey values when building rowActionMap", () => {
-    const columns = [{ key: "id", title: "ID" }];
+    const columns = [{ key: "id", title: "ID", sortable: true }];
     const data = [{ id: 1 }, { id: 1 }];
     const rowActions = [React.createElement("div", { key: "a" }, "A"), React.createElement("div", { key: "b" }, "B")];
 
@@ -48,7 +48,7 @@ describe("Story 5.7 - rowActions edge cases", () => {
   });
 
   it("keeps actions aligned when rows are re-hydrated as new object instances (matching ids)", () => {
-    const columns = [{ key: "id", title: "ID" }];
+    const columns = [{ key: "id", title: "ID", sortable: true }]satisfies Column<AdminPropertySummary>[];
     const data1 = [{ id: 1 }, { id: 2 }];
     const rowActions = [React.createElement("div", { "data-test-id": "act-1" }, "A1"), React.createElement("div", { "data-test-id": "act-2" }, "A2")];
 

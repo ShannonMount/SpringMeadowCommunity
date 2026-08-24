@@ -2,28 +2,46 @@
 
 import React, { useMemo, useState, useRef } from "react";
 import { filterData, sortData, paginateData, getEmptyState, getErrorState } from "./standard-table-utils.js";
-import { buildRowActionMap, buildStableIdMap } from "./row-action-utils.js";
+import { buildRowActionMap, buildStableIdMap } from "./row-action-utils";
 
-export type Column<T = any> = {
-  key: string;
+
+export type Column<T extends object = Record<string, unknown>> = {
+  key: keyof T & string;
   title: string;
   sortable?: boolean;
   render?: (row: T) => React.ReactNode;
 };
 
-type Props<T = any> = {
+type Props<T extends object = Record<string, unknown>> = {
   columns?: Column<T>[];
   data?: T[];
   className?: string;
   pageSize?: number;
   rowActions?: React.ReactNode[] | ((row: T) => React.ReactNode);
-  rowKey?: string | ((row: T) => string | number);
+  rowKey?: (keyof T & string) | ((row: T) => string | number);
   error?: string | null;
 };
 
+// export type Column<T = any> = {
+//   key: string;
+//   title: string;
+//   sortable?: boolean;
+//   render?: (row: T) => React.ReactNode;
+// };
+
+// type Props<T = any> = {
+//   columns?: Column<T>[];
+//   data?: T[];
+//   className?: string;
+//   pageSize?: number;
+//   rowActions?: React.ReactNode[] | ((row: T) => React.ReactNode);
+//   rowKey?: string | ((row: T) => string | number);
+//   error?: string | null;
+// };
+
 export type SortOrder = "asc" | "desc";
 
-export default function StandardTable<T>({
+export default function StandardTable<T extends object>( {
   columns = [],
   data = [],
   className = "",
@@ -48,7 +66,14 @@ export default function StandardTable<T>({
   const errorContents = error ? getErrorState(error) : null;
 
   // Build a mapping from stable row id -> action when an array of rowActions
-  const rowActionMap = useMemo(() => buildRowActionMap(rowActions, data, rowKey), [rowActions, data, rowKey]);
+//  const rowActionMap = Array.isArray(rowActions)
+//   ? buildRowActionMap(rowActions, data, rowKey)
+//   : null;
+
+const rowActionMap =
+  Array.isArray(rowActions) && rowKey
+    ? buildRowActionMap(rowActions, data, rowKey)
+    : null;
 
   // Stable id mapping for rows (object-identity -> stable id) to avoid index-based keys
   const stableIdMap = useMemo(() => buildStableIdMap(data, rowKey), [data, rowKey]);
@@ -190,14 +215,14 @@ export default function StandardTable<T>({
             </tr>
           ) : (
             paged.map((row, rowIdx) => {
-              const rowId = rowKey ? (typeof rowKey === "function" ? rowKey(row) : (row as any)[rowKey]) : undefined;
+              const rowId = rowKey ? (typeof rowKey === "function" ? rowKey(row) : (row)[rowKey]) : undefined;
               const trKey = rowId != null ? String(rowId) : stableIdMap.get(row) ?? String(rowIdx);
 
               return (
                 <tr key={trKey} className={rowIdx % 2 === 0 ? "bg-white" : "bg-surface-muted"}>
                 {columns.map((c) => (
                   <td key={c.key} className="px-2 py-2 align-top text-sm">
-                    {c.render ? c.render(row) : String((row as any)[c.key] ?? "")}
+                    {c.render ? c.render(row) : String((row )[c.key] ?? "")}
                   </td>
                 ))}
                 {rowActions ? (
@@ -209,12 +234,12 @@ export default function StandardTable<T>({
 
                       // If we have a stable rowActionMap and a rowKey, use id mapping
                       if (rowActionMap && rowKey) {
-                        const id = typeof rowKey === "function" ? rowKey(row) : (row as any)[rowKey];
+                        const id = typeof rowKey === "function" ? rowKey(row) : (row)[rowKey];
                         return id != null ? rowActionMap.get(String(id)) ?? null : null;
                       }
 
                       // Fallback: align by original array index using identity
-                      const originalIndex = data.indexOf(row as any);
+                      const originalIndex = data.indexOf(row);
                       return originalIndex >= 0 ? (rowActions as React.ReactNode[])[originalIndex] ?? null : null;
                     })()}
                   </td>
