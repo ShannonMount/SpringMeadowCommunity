@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState, useRef } from "react";
 import { filterData, sortData, paginateData, getEmptyState, getErrorState } from "./standard-table-utils.js";
+import { buildRowActionMap, buildStableIdMap } from "./row-action-utils.js";
 
 export type Column<T = any> = {
   key: string;
@@ -47,40 +48,10 @@ export default function StandardTable<T>({
   const errorContents = error ? getErrorState(error) : null;
 
   // Build a mapping from stable row id -> action when an array of rowActions
-  const rowActionMap = useMemo(() => {
-    if (!Array.isArray(rowActions)) return null;
-
-    if (!rowKey) {
-      throw new Error("StandardTable: rowKey is required when rowActions is an array");
-    }
-
-    const m = new Map<string, React.ReactNode | null>();
-    const seen = new Set<string>();
-    data.forEach((d, i) => {
-      const id = typeof rowKey === "function" ? rowKey(d) : (d as any)[rowKey];
-      const sid = id != null ? String(id) : String(i);
-      if (seen.has(sid)) {
-        // duplicate id detected
-        // eslint-disable-next-line no-console
-        console.warn("StandardTable: duplicate rowKey value detected:", sid);
-      } else {
-        seen.add(sid);
-      }
-      m.set(sid, (rowActions as React.ReactNode[])[i] ?? null);
-    });
-    return m;
-  }, [rowActions, data, rowKey]);
+  const rowActionMap = useMemo(() => buildRowActionMap(rowActions, data, rowKey), [rowActions, data, rowKey]);
 
   // Stable id mapping for rows (object-identity -> stable id) to avoid index-based keys
-  const stableIdMap = useMemo(() => {
-    const map = new Map<any, string>();
-    data.forEach((d, i) => {
-      const id = rowKey ? (typeof rowKey === "function" ? rowKey(d) : (d as any)[rowKey]) : undefined;
-      const sid = id != null ? String(id) : `__gen_${i}`;
-      map.set(d, sid);
-    });
-    return map;
-  }, [data, rowKey]);
+  const stableIdMap = useMemo(() => buildStableIdMap(data, rowKey), [data, rowKey]);
 
   function toggleSort(key: string) {
     if (sortKey === key) {
