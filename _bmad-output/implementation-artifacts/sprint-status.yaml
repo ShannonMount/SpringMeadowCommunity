@@ -91,11 +91,11 @@ development_status:
   5-5-role-assignment-and-permission-management: done
   5-6-community-settings-management: review
   5-7-admin-data-tables-and-operational-filters: done
-  5-8-audit-log-viewer: backlog
-  5-9-admin-monitoring-for-webhooks-emails-and-jobs: backlog
+  5-8-audit-log-viewer: done
+  5-9-admin-monitoring-for-webhooks-emails-and-jobs: done
   epic-5-retrospective: optional
-  epic-6: backlog
-  6-1-compliance-calendar-event-and-task-foundation: backlog
+  epic-6: in-progress
+  6-1-compliance-calendar-event-and-task-foundation: in-progress
   6-2-compliance-calendar-views-and-status-tracking: backlog
   6-3-compliance-reminder-job-and-warning-emails: backlog
   6-4-annual-association-meeting-workflow: backlog

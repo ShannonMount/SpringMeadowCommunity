@@ -50,6 +50,10 @@ export default function StandardTable<T extends object>( {
   rowKey,
   error = null,
 }: Props<T>) {
+  if (Array.isArray(rowActions) && !rowKey) {
+    throw new Error("rowKey is required when rowActions is an array");
+  }
+
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<string | undefined>(undefined);
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");

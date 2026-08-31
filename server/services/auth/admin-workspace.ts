@@ -144,6 +144,13 @@ const ADMIN_NAVIGATION_REGISTRY: AdminNavigationRegistryItem[] = [
     permissionKey: "audit.logs.view",
   },
   {
+    label: "Monitoring",
+    href: "/admin/monitoring",
+    section: "operations",
+    currentStatus: "available",
+    permissionKey: "board.workspace.access",
+  },
+  {
     label: "Settings",
     href: "/admin/settings",
     section: "settings",
