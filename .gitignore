@@ -5,3 +5,10 @@ node_modules/
 npm-debug.log*
 .DS_Store
 HOAfiles/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
