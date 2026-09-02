@@ -535,14 +535,16 @@ begin
   select coalesce(jsonb_agg(
     app.document_metadata_json(filtered_documents)
     order by filtered_documents.created_at desc, filtered_documents.id asc
-  ), '[]'::jsonb)
-  into records
-  from filtered_documents;
+  ), 
+  '[]'::jsonb
+)
+into records
+from filtered_documents;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'records', records
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'records', records
+);
 end;
 $$;
 

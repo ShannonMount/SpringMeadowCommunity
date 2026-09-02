@@ -120,15 +120,17 @@ begin
       'updated_at', user_rows.updated_at
     )
     order by coalesce(user_rows.display_name, user_rows.email), user_rows.email, user_rows.id
-  ), '[]'::jsonb)
-  into users_json
-  from user_rows;
+  ), 
+  '[]'::jsonb
+)
+into users_json
+from user_rows;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'community_id', target_community_id,
-    'users', users_json
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'community_id', target_community_id,
+  'users', users_json
+);
 end;
 $$;
 
@@ -294,15 +296,17 @@ begin
       )
     )
     order by membership_rows.email asc, membership_rows.account_number asc, membership_rows.id asc
-  ), '[]'::jsonb)
-  into memberships_json
-  from membership_rows;
+  ), 
+  '[]'::jsonb
+)
+into memberships_json
+from membership_rows;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'community_id', target_community_id,
-    'memberships', memberships_json
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'community_id', target_community_id,
+  'memberships', memberships_json
+);
 end;
 $$;
 

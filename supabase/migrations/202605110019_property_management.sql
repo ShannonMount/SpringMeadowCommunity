@@ -165,15 +165,17 @@ begin
       'updated_at', filtered_properties.updated_at
     )
     order by filtered_properties.account_number asc, filtered_properties.address_line1 asc, filtered_properties.id asc
-  ), '[]'::jsonb)
-  into properties_json
-  from filtered_properties;
+  ), 
+  '[]'::jsonb
+)
+into properties_json
+from filtered_properties;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'community_id', target_community_id,
-    'properties', properties_json
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'community_id', target_community_id,
+  'properties', properties_json
+);
 end;
 $$;
 

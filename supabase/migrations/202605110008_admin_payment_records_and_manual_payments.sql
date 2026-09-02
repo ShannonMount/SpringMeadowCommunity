@@ -54,15 +54,15 @@ revoke all on function app.set_manual_payment_requests_updated_at() from public,
 
 create or replace function public.list_admin_payment_records(
   target_community_id uuid,
-  filter_status text default null,
-  filter_payer_type text default null,
-  filter_method text default null,
-  filter_property_id uuid default null,
-  filter_from timestamptz default null,
-  filter_to timestamptz default null,
-  filter_query text default null,
-  page_limit integer default 50,
-  page_offset integer default 0
+  filter_status text,
+  filter_payer_type text,
+  filter_method text,
+  filter_property_id uuid,
+  filter_from timestamptz,
+  filter_to timestamptz,
+  filter_query text,
+  page_limit integer,
+  page_offset integer
 )
 returns jsonb
 language plpgsql
@@ -184,42 +184,53 @@ begin
     limit bounded_limit
     offset bounded_offset
   )
-  select coalesce(jsonb_agg(
-    jsonb_build_object(
-      'id', filtered_payments.id,
-      'community_id', filtered_payments.community_id,
-      'property_id', filtered_payments.property_id,
-      'property_label', concat_ws(', ',
-        filtered_payments.address_line1,
-        nullif(filtered_payments.address_line2, ''),
-        filtered_payments.city,
-        filtered_payments.state,
-        filtered_payments.postal_code
-      ),
-      'status', filtered_payments.status,
-      'payer_type', filtered_payments.payer_type,
-      'amount_cents', filtered_payments.amount_cents,
-      'currency', filtered_payments.currency,
-      'fee_policy', filtered_payments.fee_policy,
-      'method', filtered_payments.method,
-      'receipt_number', filtered_payments.receipt_number,
-      'stripe_checkout_session_id', filtered_payments.stripe_checkout_session_id,
-      'stripe_payment_intent_id', filtered_payments.stripe_payment_intent_id,
-      'stripe_charge_id', filtered_payments.stripe_charge_id,
-      'processor_fee_cents', filtered_payments.processor_fee_cents,
-      'net_amount_cents', filtered_payments.net_amount_cents,
-      'paid_at', filtered_payments.paid_at,
-      'created_at', filtered_payments.created_at,
-      'updated_at', filtered_payments.updated_at,
-      'allocated_cents', filtered_payments.allocated_cents,
-      'unapplied_cents', greatest(filtered_payments.amount_cents - filtered_payments.allocated_cents, 0)
-    )
-    order by
-      coalesce(filtered_payments.paid_at, filtered_payments.created_at) desc,
-      filtered_payments.created_at desc,
-      filtered_payments.id desc
-    )
-  ), '[]'::jsonb)
+    select coalesce(
+    jsonb_agg(
+      jsonb_build_object(
+        'id', filtered_payments.id,
+        'community_id', filtered_payments.community_id,
+        'property_id', filtered_payments.property_id,
+        'property_label', concat_ws(
+          ', ',
+          filtered_payments.address_line1,
+          nullif(filtered_payments.address_line2, ''),
+          filtered_payments.city,
+          filtered_payments.state,
+          filtered_payments.postal_code
+        ),
+        'status', filtered_payments.status,
+        'payer_type', filtered_payments.payer_type,
+        'amount_cents', filtered_payments.amount_cents,
+        'currency', filtered_payments.currency,
+        'fee_policy', filtered_payments.fee_policy,
+        'method', filtered_payments.method,
+        'receipt_number', filtered_payments.receipt_number,
+        'stripe_checkout_session_id', filtered_payments.stripe_checkout_session_id,
+        'stripe_payment_intent_id', filtered_payments.stripe_payment_intent_id,
+        'stripe_charge_id', filtered_payments.stripe_charge_id,
+        'processor_fee_cents', filtered_payments.processor_fee_cents,
+        'net_amount_cents', filtered_payments.net_amount_cents,
+        'paid_at', filtered_payments.paid_at,
+        'created_at', filtered_payments.created_at,
+        'updated_at', filtered_payments.updated_at,
+        'allocated_cents', filtered_payments.allocated_cents,
+        'unapplied_cents',
+          greatest(
+            filtered_payments.amount_cents -
+              filtered_payments.allocated_cents,
+            0
+          )
+      )
+      order by
+        coalesce(
+          filtered_payments.paid_at,
+          filtered_payments.created_at
+        ) desc,
+        filtered_payments.created_at desc,
+        filtered_payments.id desc
+    ),
+    '[]'::jsonb
+  )
   into records
   from filtered_payments;
 

@@ -307,15 +307,16 @@ begin
       filtered_rows.oldest_unpaid_due_date asc,
       filtered_rows.current_balance_cents desc,
       filtered_rows.property_id asc
-    )
-  ), '[]'::jsonb)
-  into records
-  from filtered_rows;
+  ), 
+  '[]'::jsonb
+)
+into records
+from filtered_rows;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'records', records
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'records', records
+);
 end;
 $$;
 

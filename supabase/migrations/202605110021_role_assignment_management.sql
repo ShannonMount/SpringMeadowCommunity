@@ -91,15 +91,17 @@ begin
       'updated_at', role_rows.updated_at
     )
     order by role_rows.system_role desc, role_rows.name asc, role_rows.key asc
-  ), '[]'::jsonb)
-  into roles_json
-  from role_rows;
+  ), 
+  '[]'::jsonb
+)
+into roles_json
+from role_rows;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'community_id', target_community_id,
-    'roles', roles_json
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'community_id', target_community_id,
+  'roles', roles_json
+);
 end;
 $$;
 
@@ -262,15 +264,17 @@ begin
       'updated_at', assignment_rows.updated_at
     )
     order by assignment_rows.email asc, assignment_rows.role_name asc, assignment_rows.updated_at desc, assignment_rows.id asc
-  ), '[]'::jsonb)
-  into assignments_json
-  from assignment_rows;
+  ), 
+  '[]'::jsonb
+)
+into assignments_json
+from assignment_rows;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'community_id', target_community_id,
-    'assignments', assignments_json
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'community_id', target_community_id,
+  'assignments', assignments_json
+);
 end;
 $$;
 
@@ -372,23 +376,25 @@ begin
       'status', profile_rows.status
     )
     order by coalesce(profile_rows.display_name, profile_rows.email), profile_rows.email, profile_rows.id
-  ), '[]'::jsonb)
-  into profiles_json
-  from profile_rows;
+  ), 
+  '[]'::jsonb
+)
+into profiles_json
+from profile_rows;
 
-  with property_rows as (
-    select
-      properties.id,
-      properties.account_number,
-      properties.address_line1,
-      properties.city,
-      properties.state,
-      properties.postal_code
-    from public.properties
-    where properties.community_id = target_community_id
-      and properties.deleted_at is null
-    order by properties.account_number asc, properties.address_line1 asc, properties.id asc
-  )
+with property_rows as (
+  select
+    properties.id,
+    properties.account_number,
+    properties.address_line1,
+    properties.city,
+    properties.state,
+    properties.postal_code
+  from public.properties
+  where properties.community_id = target_community_id
+    and properties.deleted_at is null
+  order by properties.account_number asc, properties.address_line1 asc, properties.id asc
+)
   select coalesce(jsonb_agg(
     jsonb_build_object(
       'id', property_rows.id,
@@ -400,7 +406,9 @@ begin
       'postal_code', property_rows.postal_code
     )
     order by property_rows.account_number asc, property_rows.address_line1 asc, property_rows.id asc
-  ), '[]'::jsonb)
+  ), 
+  '[]'::jsonb
+  )
   into properties_json
   from property_rows;
 

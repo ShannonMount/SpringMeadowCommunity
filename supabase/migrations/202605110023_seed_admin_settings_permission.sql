@@ -11,8 +11,21 @@ with spring_meadow as (
   where r.key = 'admin'
   limit 1
 )
-update public.roles
-set permissions = array_cat(permissions, array['admin.settings.manage']::text[])
-from admin_role ar
-where roles.id = ar.id
-  and not ('admin.settings.manage' = any(ar.permissions));
+-- Migration: seed admin.settings.manage permission to the admin role only
+
+update public.roles as target_role
+set
+  permissions = array_append(
+    coalesce(target_role.permissions, '{}'::text[]),
+    'admin.settings.manage'
+  ),
+  updated_at = now()
+from public.communities as community
+where target_role.community_id = community.id
+  and community.slug = 'spring-meadow-community'
+  and target_role.key = 'admin'
+  and not (
+    'admin.settings.manage' = any(
+      coalesce(target_role.permissions, '{}'::text[])
+    )
+  );

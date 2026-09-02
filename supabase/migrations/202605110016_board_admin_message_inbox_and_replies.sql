@@ -323,14 +323,16 @@ begin
   select coalesce(jsonb_agg(
     app.message_thread_summary_json(filtered_threads)
     order by filtered_threads.last_message_at desc, filtered_threads.created_at desc, filtered_threads.id desc
-  ), '[]'::jsonb)
-  into records
-  from filtered_threads;
+  ), 
+  '[]'::jsonb
+)
+into records
+from filtered_threads;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'records', records
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'records', records
+);
 end;
 $$;
 
@@ -360,18 +362,20 @@ begin
   select coalesce(jsonb_agg(
     app.message_json(messages)
     order by messages.created_at asc, messages.id asc
-  ), '[]'::jsonb)
-  into messages_record
-  from public.messages
-  where messages.thread_id = thread_record.id
-    and messages.community_id = thread_record.community_id
-    and messages.deleted_at is null;
+  ), 
+  '[]'::jsonb
+)
+into messages_record
+from public.messages
+where messages.thread_id = thread_record.id
+  and messages.community_id = thread_record.community_id
+  and messages.deleted_at is null;
 
-  return jsonb_build_object(
-    'status', 'ok',
-    'thread', app.message_thread_summary_json(thread_record),
-    'messages', messages_record
-  );
+return jsonb_build_object(
+  'status', 'ok',
+  'thread', app.message_thread_summary_json(thread_record),
+  'messages', messages_record
+);
 end;
 $$;
 
