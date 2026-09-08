@@ -95,8 +95,8 @@ development_status:
   5-9-admin-monitoring-for-webhooks-emails-and-jobs: done
   epic-5-retrospective: optional
   epic-6: in-progress
-  6-1-compliance-calendar-event-and-task-foundation: review
-  6-2-compliance-calendar-views-and-status-tracking: backlog
+  6-1-compliance-calendar-event-and-task-foundation: done
+  6-2-compliance-calendar-views-and-status-tracking: ready-for-dev
   6-3-compliance-reminder-job-and-warning-emails: backlog
   6-4-annual-association-meeting-workflow: backlog
   6-5-meeting-records-minutes-and-board-meeting-tracking: backlog
