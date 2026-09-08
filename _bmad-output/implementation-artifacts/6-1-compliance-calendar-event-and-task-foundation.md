@@ -1,6 +1,6 @@
 # Story 6.1: Compliance Calendar Event and Task Foundation
 
-Status: in-progress
+Status: review
 
 ## Story
 
@@ -28,11 +28,11 @@ so that legally important HOA deadlines are visible and assignable.
   - [x] Grant `legal.workflow.review` to legal/compliance reviewer roles.
   - [x] Keep the permission model aligned with the existing role assignment system.
 
-- [ ] Add the actual compliance service and admin page behavior. (AC: 1, 2, 3)
-  - [ ] Build permission-aware CRUD/list functions for compliance calendar events and tasks.
-  - [ ] Add a real admin compliance page to render the event/task records and safe access states.
-  - [ ] Enforce permission gating before listing, creating, updating, or completing compliance records.
-  - [ ] Keep task completion metadata and evidence payloads safely scoped to authorized board/admin workflows.
+- [x] Add the actual compliance service and admin page behavior. (AC: 1, 2, 3)
+  - [x] Build permission-aware CRUD/list functions for compliance calendar events and tasks.
+  - [x] Add a real admin compliance page to render the event/task records and safe access states.
+  - [x] Enforce permission gating before listing, creating, updating, or completing compliance records.
+  - [x] Keep task completion metadata and evidence payloads safely scoped to authorized board/admin workflows.
 
 - [x] Add focused regression coverage. (AC: 1, 2, 3)
   - [x] Add `tests/compliance-calendar-foundation.test.mjs`.
@@ -45,6 +45,7 @@ This is the foundational compliance calendar story. It establishes the schema an
 ### Relevant Files
 
 - `supabase/migrations/202605110024_compliance_calendar_foundation.sql`
+- `supabase/migrations/202609070001_compliance_calendar_management.sql`
 - `tests/compliance-calendar-foundation.test.mjs`
 - `app/(admin)/admin/compliance/page.tsx`
 - `server/services/auth/admin-workspace.ts`

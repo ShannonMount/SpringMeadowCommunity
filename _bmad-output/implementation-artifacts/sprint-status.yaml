@@ -95,7 +95,7 @@ development_status:
   5-9-admin-monitoring-for-webhooks-emails-and-jobs: done
   epic-5-retrospective: optional
   epic-6: in-progress
-  6-1-compliance-calendar-event-and-task-foundation: in-progress
+  6-1-compliance-calendar-event-and-task-foundation: review
   6-2-compliance-calendar-views-and-status-tracking: backlog
   6-3-compliance-reminder-job-and-warning-emails: backlog
   6-4-annual-association-meeting-workflow: backlog
@@ -104,6 +104,12 @@ development_status:
   6-7-records-request-reminder-and-overdue-escalation: backlog
   6-8-annual-financial-statement-workflow: backlog
   6-9-audit-review-and-compilation-workflow: backlog
+  6-10-compliance-calendar-admin-crud-workflow: backlog
+  6-11-compliance-calendar-community-reference-validation: backlog
+  6-12-compliance-calendar-input-validation: backlog
+  6-13-compliance-calendar-completion-lifecycle: backlog
+  6-14-compliance-calendar-audit-logging: backlog
+  6-15-compliance-calendar-behavioral-regression-coverage: backlog
   epic-6-retrospective: optional
   epic-7: backlog
   7-1-delinquency-case-foundation: backlog

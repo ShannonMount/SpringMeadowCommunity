@@ -8,6 +8,13 @@ import { defineConfig, devices } from '@playwright/test';
 // import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
+const baseURL =
+  process.env.SMOKE_BASE_URL ?? "http://127.0.0.1:3000";
+
+const isLocalTarget =
+  baseURL.startsWith("http://localhost:") ||
+  baseURL.startsWith("http://127.0.0.1:");
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -28,9 +35,30 @@ export default defineConfig({
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
 
+    baseURL,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
   },
+
+  // Start Next.js only when testing a local URL.
+  webServer: isLocalTarget
+    ? {
+        command: process.env.CI
+          ? "npm run start"
+          : "npm run dev",
+        url: baseURL,
+        reuseExistingServer: !process.env.CI,
+        timeout: 120_000,
+      }
+    : undefined,
+
+  // webServer: {
+  //   command: "npm run start",
+  //   url: "http://127.0.0.1:3000",
+  //   reuseExistingServer: !process.env.CI,
+  //   timeout: 120_000,
+  // },
 
   /* Configure projects for major browsers */
   projects: [
