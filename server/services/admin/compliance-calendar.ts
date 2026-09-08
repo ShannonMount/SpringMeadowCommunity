@@ -1,6 +1,7 @@
 import "server-only";
 
 import { createClient } from "@/lib/supabase/server";
+import { filterComplianceEvents } from "@/lib/compliance-calendar-filters";
 import {
   getCurrentProfile,
   PROFILE_UNAVAILABLE_MESSAGE,
@@ -69,6 +70,15 @@ export type ComplianceCalendarSummary = {
   reviewRequiredCount: number;
   events: ComplianceEvent[];
   tasks: ComplianceTask[];
+};
+
+export type ComplianceCalendarFilters = {
+  view?: "month" | "list";
+  from?: string | null;
+  to?: string | null;
+  status?: ComplianceStatus | null;
+  type?: string | null;
+  assignedProfileId?: string | null;
 };
 
 export type ComplianceCalendarResult =
@@ -268,7 +278,7 @@ async function hasComplianceAccess(communityId: string): Promise<PermissionResul
 }
 
 export async function listComplianceCalendar(
-  input: { communitySlug?: string | null } = {},
+  input: { communitySlug?: string | null; filters?: ComplianceCalendarFilters } = {},
 ): Promise<ComplianceCalendarResult> {
   const profileResult = await getCurrentProfile();
 
@@ -314,14 +324,18 @@ export async function listComplianceCalendar(
   const events = (result.events ?? []).map(normalizeEvent);
   const tasks = (result.tasks ?? []).map(normalizeTask);
 
+  const filteredEvents = filterComplianceEvents(events, input.filters);
+  const filteredEventIds = new Set(filteredEvents.map((event) => event.id));
+  const filteredTasks = tasks.filter((task) => filteredEventIds.has(task.complianceEventId));
+
   const now = Date.now();
-  const upcomingCount = events.filter((event) => event.status === "upcoming" || event.status === "in_progress").length;
-  const overdueCount = events.filter((event) => {
+  const upcomingCount = filteredEvents.filter((event) => event.status === "upcoming" || event.status === "in_progress").length;
+  const overdueCount = filteredEvents.filter((event) => {
     if (event.status === "overdue") return true;
     if (!event.dueAt) return false;
     return Date.parse(event.dueAt) < now;
   }).length;
-  const reviewRequiredCount = events.filter((event) => event.status === "legal_review_required").length;
+  const reviewRequiredCount = filteredEvents.filter((event) => event.status === "legal_review_required").length;
 
   return {
     kind: "calendar",
@@ -332,8 +346,8 @@ export async function listComplianceCalendar(
       upcomingCount,
       overdueCount,
       reviewRequiredCount,
-      events,
-      tasks,
+      events: filteredEvents,
+      tasks: filteredTasks,
     },
   };
 }
