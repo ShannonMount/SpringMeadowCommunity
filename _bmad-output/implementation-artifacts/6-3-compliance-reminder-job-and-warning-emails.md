@@ -1,6 +1,6 @@
 # Story 6.3: Compliance Reminder Job and Warning Emails
 
-Status: review
+Status: done
 
 ## Story
 
@@ -31,7 +31,7 @@ so that deadlines are not missed because someone forgot to check the calendar.
   - [x] Render warning content with the minimum deadline and recipient details needed for the authorized workflow.
   - [x] Record queued, sent, delivered, bounced, failed, or suppressed provider outcomes where available.
   - [x] Record provider errors in sanitized form and avoid exposing credentials or raw provider payloads.
-- [ ] Expose failures through admin monitoring. (AC: 2)
+- [x] Expose failures through admin monitoring. (AC: 2)
   - [x] Include reminder job failures and email failures in the existing monitoring summary where appropriate.
   - [x] Preserve community scoping and monitoring permission checks.
   - [x] Keep recipient and compliance details limited to authorized admin workflows.
@@ -70,7 +70,7 @@ Reminder execution should be deterministic and idempotent: a retry may re-attemp
 ## Verification
 
 - `npm run test:db` passed both rollback-based SQL integration tests.
-- `node --test tests/compliance-reminder-job.test.mjs tests/compliance-calendar-views.test.mjs tests/compliance-calendar-foundation.test.mjs tests/compliance-calendar-admin.test.mjs` passed 9 tests.
+- `node --test tests/compliance-reminder-job.test.mjs tests/admin-monitoring.test.mjs tests/compliance-calendar-views.test.mjs tests/compliance-calendar-foundation.test.mjs tests/compliance-calendar-admin.test.mjs` passed 11 tests.
 - `npx tsx --test tests/compliance-calendar-filters.test.ts` passed 3 tests.
 - `npx tsx --test tests/compliance-reminder-timing.test.ts` passed the UTC calendar-day boundary test.
 - `npm run typecheck` and `git diff --check` passed.
