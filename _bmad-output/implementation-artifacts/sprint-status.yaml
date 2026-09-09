@@ -98,7 +98,7 @@ development_status:
   6-1-compliance-calendar-event-and-task-foundation: done
   6-2-compliance-calendar-views-and-status-tracking: done
   6-3-compliance-reminder-job-and-warning-emails: done
-  6-4-annual-association-meeting-workflow: backlog
+  6-4-annual-association-meeting-workflow: review
   6-5-meeting-records-minutes-and-board-meeting-tracking: backlog
   6-6-records-request-workflow: backlog
   6-7-records-request-reminder-and-overdue-escalation: backlog
@@ -110,6 +110,11 @@ development_status:
   6-13-compliance-calendar-completion-lifecycle: backlog
   6-14-compliance-calendar-audit-logging: backlog
   6-15-compliance-calendar-behavioral-regression-coverage: backlog
+  6-16-meeting-notice-policy-configuration: ready-for-dev
+  6-17-annual-meeting-lifecycle: ready-for-dev
+  6-18-meeting-settings-dependency: ready-for-dev
+  6-19-meeting-timezone-and-date-rules: ready-for-dev
+  6-20-meeting-compliance-event-linkage: ready-for-dev
   epic-6-retrospective: optional
   epic-7: backlog
   7-1-delinquency-case-foundation: backlog

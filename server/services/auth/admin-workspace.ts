@@ -131,6 +131,13 @@ const ADMIN_NAVIGATION_REGISTRY: AdminNavigationRegistryItem[] = [
     currentStatus: "planned",
   },
   {
+    label: "Annual Meetings",
+    href: "/admin/meetings",
+    section: "records",
+    currentStatus: "available",
+    permissionKey: "admin.meetings.manage",
+  },
+  {
     label: "Records Requests",
     href: "/admin/records",
     section: "records",

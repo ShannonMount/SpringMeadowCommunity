@@ -9,7 +9,7 @@
     "lint": "npm run typecheck",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
-    "test:db": "psql \"${DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres}\" --set ON_ERROR_STOP=1 --file tests/integration/compliance-calendar-legal-completion.sql && psql \"${DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres}\" --set ON_ERROR_STOP=1 --file tests/integration/compliance-reminder-idempotency.sql && bash tests/integration/compliance-reminder-concurrency.sh"
+    "test:db": "psql \"${DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres}\" --set ON_ERROR_STOP=1 --file tests/integration/compliance-calendar-legal-completion.sql && psql \"${DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres}\" --set ON_ERROR_STOP=1 --file tests/integration/compliance-reminder-idempotency.sql && bash tests/integration/compliance-reminder-concurrency.sh && psql \"${DATABASE_URL:-postgresql://postgres:postgres@127.0.0.1:54322/postgres}\" --set ON_ERROR_STOP=1 --file tests/integration/annual-association-meeting.sql"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",
